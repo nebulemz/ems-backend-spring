@@ -3,6 +3,7 @@ package net.lems.emsbackend.service.impl;
 import lombok.AllArgsConstructor;
 import net.lems.emsbackend.dto.EmployeeDto;
 import net.lems.emsbackend.entity.Employee;
+import net.lems.emsbackend.exception.ResourceNotFoundException;
 import net.lems.emsbackend.mapper.EmployeeMapper;
 import net.lems.emsbackend.repository.EmployeeRepository;
 import net.lems.emsbackend.service.EmployeeService;
@@ -21,5 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
 
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getEmployeeById(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() ->
+                new ResourceNotFoundException("Employee not found with given Id: " + employeeId));
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 }
