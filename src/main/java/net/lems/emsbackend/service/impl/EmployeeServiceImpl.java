@@ -9,6 +9,9 @@ import net.lems.emsbackend.repository.EmployeeRepository;
 import net.lems.emsbackend.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -31,4 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 new ResourceNotFoundException("Employee not found with given Id: " + employeeId));
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream().map(EmployeeMapper::mapToEmployeeDto).collect(Collectors.toList());
+   }
 }
