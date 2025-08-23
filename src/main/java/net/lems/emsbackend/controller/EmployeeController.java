@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/employees")
@@ -48,5 +49,4 @@ public class EmployeeController {
     employeeService.deleteEmployee(employeeId);
     return ResponseEntity.ok("Employee deleted successfully");
     }
-
 }
